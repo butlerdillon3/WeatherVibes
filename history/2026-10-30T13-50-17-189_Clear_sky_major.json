@@ -1,0 +1,155 @@
+{
+  "timestamp": "2026-10-30T13:50:17-04:00",
+  "weather": "Clear sky",
+  "weather_code": 0,
+  "scale": "major",
+  "tonic": "C4",
+  "bars": 4,
+  "bpm": 130,
+  "swing": 0.1,
+  "wind_gust": 26.4,
+  "volume": 0.35,
+  "duty": 0.25,
+  "seed": null,
+  "lead_pool": [
+    "C5",
+    "D5",
+    "E5",
+    "F5",
+    "G5",
+    "A5",
+    "B5",
+    "C6",
+    "D6",
+    "E6",
+    "F6",
+    "G6",
+    "A6",
+    "B6",
+    "C7"
+  ],
+  "lead": "- . E5 . F5 . . . A5 . . . C6 . . . D5 . . . E5 . . . G5 . . . B5 . - . D5 . . . C5 . . . C5 . . . D5 . . . D5 . . . D5 . . . C5 . . . . . . .",
+  "rhythm_line": "C4 . - . C4 . . . - . C4 . - . . . B3 . - . - . . . - . B3 . - . . . G3 . - . G3 . . . - . G3 . - . . . C4 . - . . . . . . . . . C4 . . .",
+  "bass": "C2 . . . . . . . . . . . . . . . B2 . . . . . . . A2 . . . . . . . G2 . . . . . B2 . . . . . F2 . . . D2 . . . C2 . . . . . . . . . . .",
+  "chords": "C4 E4 G4 | B3 D4 F4 | G3 B3 D4 | C4 E4 G4",
+  "rhythm": [
+    {
+      "notes": [
+        "C4",
+        "E4",
+        "G4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "C4",
+        "E4"
+      ],
+      "sixteenths": 4
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "C4",
+        "E4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 4
+    },
+    {
+      "notes": [
+        "B3",
+        "D4",
+        "F4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 4
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "B3",
+        "D4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 4
+    },
+    {
+      "notes": [
+        "G3",
+        "B3",
+        "D4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "G3",
+        "B3"
+      ],
+      "sixteenths": 4
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "G3",
+        "B3"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 4
+    },
+    {
+      "notes": [
+        "C4",
+        "E4",
+        "G4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 10
+    },
+    {
+      "notes": [
+        "C4",
+        "E4"
+      ],
+      "sixteenths": 4
+    }
+  ]
+}

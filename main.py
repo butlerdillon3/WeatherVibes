@@ -9,7 +9,13 @@ if __name__ == "__main__":
     if not isinstance(code, int):
         raise TypeError(f"Expected an integer weather code, got {code!r}.") 
 
-    jingle = Jingle(code)
+    gust = weather["wind_gust"]
+    jingle = Jingle(code, wind_gust=gust if isinstance(gust, (int, float)) else None)
     tune = jingle.build()
-    print(f"{jingle.scale_name}: {jingle.melody_line}")
+    saved = jingle.save()
+    print(f"{jingle.scale_name} at {jingle.synth.bpm:g} bpm")
+    print(f"lead:   {jingle.lead_line}")
+    print(f"rhythm: {jingle.rhythm_line}")
+    print(f"bass:   {jingle.bass_line}")
+    print(saved)
     jingle.synth.play(tune)

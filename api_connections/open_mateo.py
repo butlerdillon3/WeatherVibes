@@ -10,41 +10,10 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
+from const.weather_scale_mappings import WEATHER_NAMES
+
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
-
-# WMO weather interpretation codes, from the Open-Meteo forecast docs.
-WEATHER_CODES = {
-    0: "Clear sky",
-    1: "Mainly clear",
-    2: "Partly cloudy",
-    3: "Overcast",
-    45: "Fog",
-    48: "Depositing rime fog",
-    51: "Light drizzle",
-    53: "Moderate drizzle",
-    55: "Dense drizzle",
-    56: "Light freezing drizzle",
-    57: "Dense freezing drizzle",
-    61: "Slight rain",
-    63: "Moderate rain",
-    65: "Heavy rain",
-    66: "Light freezing rain",
-    67: "Heavy freezing rain",
-    71: "Slight snowfall",
-    73: "Moderate snowfall",
-    75: "Heavy snowfall",
-    77: "Snow grains",
-    80: "Slight rain showers",
-    81: "Moderate rain showers",
-    82: "Violent rain showers",
-    85: "Slight snow showers",
-    86: "Heavy snow showers",
-    95: "Thunderstorm",
-    96: "Thunderstorm with slight hail",
-    97: "Heavy thunderstorm",
-    99: "Thunderstorm with heavy hail",
-}
 
 
 class OpenMateoError(Exception):
@@ -58,16 +27,20 @@ class OpenMateo:
         self.zip_code = _normalize_zip(zip_code)
 
     def today(self) -> dict[str, object]:
-        """Look up the zip code and return today's place, code, condition, high, and low."""
+        """Look up the zip code and return today's place, code, condition, high, low, and max gust.
+
+        Wind gust is miles per hour.
+        """
         place = self._geocode()
         daily = self._forecast(place["latitude"], place["longitude"])
         code = int(daily["weather_code"][0])
         return {
             "place": place["name"],
             "weather_code": code,
-            "condition": WEATHER_CODES.get(code, f"Unknown ({code})"),
+            "condition": WEATHER_NAMES.get(code, f"Unknown ({code})"),
             "high": daily["temperature_2m_max"][0],
             "low": daily["temperature_2m_min"][0],
+            "wind_gust": daily["wind_gusts_10m_max"][0],
         }
 
     def _geocode(self) -> dict:
@@ -86,9 +59,10 @@ class OpenMateo:
             {
                 "latitude": latitude,
                 "longitude": longitude,
-                "daily": "weather_code,temperature_2m_max,temperature_2m_min",
+                "daily": "weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max",
                 "forecast_days": 1,
                 "temperature_unit": "fahrenheit",
+                "wind_speed_unit": "mph",
                 "timezone": "auto",
             },
         )

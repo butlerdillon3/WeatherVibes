@@ -1,0 +1,192 @@
+{
+  "timestamp": "2026-10-30T13:31:36-04:00",
+  "weather": "Clear sky",
+  "weather_code": 0,
+  "scale": "major",
+  "tonic": "C4",
+  "bars": 4,
+  "bpm": 130,
+  "wind_gust": 26.4,
+  "volume": 0.35,
+  "duty": 0.25,
+  "seed": null,
+  "lead_pool": [
+    "C5",
+    "D5",
+    "E5",
+    "F5",
+    "G5",
+    "A5",
+    "B5",
+    "C6",
+    "D6",
+    "E6",
+    "F6",
+    "G6",
+    "A6",
+    "B6",
+    "C7"
+  ],
+  "lead": "C5 . D5 . F5 . E5 . E5 . . . . . . . D5 . E5 . G5 . F5 . F5 . . . . . - . C5 . D5 . F5 . E5 . E5 . . . . . . . E5 . D5 . C5 . . . C5 . . . . . . .",
+  "rhythm_line": "C4 . . . - . C4 . C4 . - . C4 . - . D4 . . . - . D4 . D4 . - . D4 . - . E3 . . . - . E3 . E3 . - . E3 . - . F3 . - . . . . . F3 . - . . . . .",
+  "bass": "C2 . . . . . . . . . . . . . . . D2 . . . . . . . C2 . . . . . . . E2 . . . . . . . . . . . . . . . F2 . . . . . . . C2 . . . . . . .",
+  "chords": "C4 E4 G4 | D4 F4 A4 | E3 G3 B3 | F3 A3 C4",
+  "rhythm": [
+    {
+      "notes": [
+        "C4",
+        "E4",
+        "G4"
+      ],
+      "sixteenths": 4
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "C4",
+        "E4",
+        "G4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "C4",
+        "E4",
+        "G4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "C4",
+        "E4",
+        "G4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "D4",
+        "F4",
+        "A4"
+      ],
+      "sixteenths": 4
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "D4",
+        "F4",
+        "A4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "D4",
+        "F4",
+        "A4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "D4",
+        "F4",
+        "A4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "E3",
+        "G3",
+        "B3"
+      ],
+      "sixteenths": 4
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "E3",
+        "G3",
+        "B3"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "E3",
+        "G3",
+        "B3"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "E3",
+        "G3",
+        "B3"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 2
+    },
+    {
+      "notes": [
+        "F3",
+        "A3",
+        "C4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 6
+    },
+    {
+      "notes": [
+        "F3",
+        "A3",
+        "C4"
+      ],
+      "sixteenths": 2
+    },
+    {
+      "notes": null,
+      "sixteenths": 6
+    }
+  ]
+}
