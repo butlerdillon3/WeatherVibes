@@ -10,11 +10,23 @@ requires-python = ">=3.14"
 dependencies = [
     "python-dotenv (>=1.2.4,<2.0.0)",
     "blip8 (>=0.1.0,<0.2.0)",
-    "music21 (>=10.5.2,<11.0.0)"
+    "music21 (>=10.5.2,<11.0.0)",
+    "numpy (>=2.5.4,<3.0.0)",
+    "scipy (>=1.18.1,<2.0.0)",
+    "torch (>=2.15.0,<3.0.0)",
+    "transformers (>=5.22.1,<6.0.0)"
 ]
 
 [tool.poetry]
 package-mode = false
+
+[[tool.poetry.source]]
+name = "pytorch-cu132"
+url = "https://download.pytorch.org/whl/cu132"
+priority = "explicit"
+
+[tool.poetry.dependencies]
+torch = { source = "pytorch-cu132" }
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

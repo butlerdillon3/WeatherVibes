@@ -222,3 +222,10 @@ __marimo__/
 # Saved jingle runs
 history/*
 !history/.gitkeep
+
+# Generated weather clips
+weather_clips/*
+!weather_clips/.gitkeep
+
+# Downloaded MusicGen weights
+model-cache/
