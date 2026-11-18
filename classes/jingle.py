@@ -9,7 +9,6 @@ from __future__ import annotations
 import json
 import random
 from collections.abc import Callable
-from datetime import datetime
 from pathlib import Path
 
 import blip8
@@ -18,6 +17,7 @@ from music21 import scale
 from music21.scale import ConcreteScale
 
 from classes.blip8 import Blip8
+from classes.clip_path import clip_path
 from const.weather_scale_mappings import WEATHER_NAMES, WEATHER_SCALES, bpm_for_gust
 
 HISTORY_DIR = Path(__file__).resolve().parent.parent / "history"
@@ -154,21 +154,25 @@ def _chords_by_bar(hits: list[Hit]) -> list[tuple[str, ...]]:
 
 
 class Jingle:
-    """Builds a lead, a rhythm synth, and a ringing bass line for one weather code."""
+    """Builds a lead, a rhythm synth, and a ringing bass line for one forecast."""
 
     def __init__(
         self,
-        weather_code: int,
+        weather: dict[str, object],
         *,
         tonic: str = "C4",
         bars: int = 4,
         seed: int | None = None,
         synth: Blip8 | None = None,
         bpm: float = 120,
-        wind_gust: float | None = None,
         volume: float = 0.35,
         duty: float = 0.25,
     ) -> None:
+        weather_code = weather["weather_code"]
+        if not isinstance(weather_code, int):
+            raise TypeError(f"Expected an integer weather code, got {weather_code!r}.")
+        gust = weather.get("wind_gust")
+        wind_gust = gust if isinstance(gust, (int, float)) else None
         try:
             scale_name = WEATHER_SCALES[weather_code]
         except KeyError:
@@ -181,6 +185,7 @@ class Jingle:
         if bars < 1:
             raise ValueError(f"A jingle needs at least one bar, got {bars}.")
 
+        self.weather = weather
         self.weather_code = weather_code
         self.scale_name = scale_name
         self.tonic = tonic
@@ -196,6 +201,7 @@ class Jingle:
         self._scale = build(tonic)
         self._rng = random.Random(seed)
         self._pcs = self._pitch_classes(self._span("P8"))
+        self.tune: Samples | None = None
         self.lead_line = ""
         self.melody_line = ""
         self.rhythm_line = ""
@@ -229,58 +235,41 @@ class Jingle:
         self.rhythm_line = _hit_pattern(rhythm)
         self.bass_line = _as_pattern(bass)
         self.chord_line = " | ".join(" ".join(chord) for chord in _chords_by_bar(rhythm))
-        return self.synth.layer(
+        self.tune = self.synth.layer(
             self._render_lead(lead, pool),
             self._render_rhythm(rhythm),
             self._render_bass(bass),
         )
+        return self.tune
 
     def play(self) -> None:
         """Build a jingle and play it through the speakers."""
         self.synth.play(self.build())
 
     def save(self, directory: Path | None = None) -> Path:
-        """Write this jingle to history as JSON. Build it first."""
-        if not self.lead_line:
+        """Write this jingle to history as a wav named like a MusicGen clip. Build it first."""
+        if self.tune is None:
             raise RuntimeError("Build the jingle before saving it.")
         folder = HISTORY_DIR if directory is None else directory
         folder.mkdir(parents=True, exist_ok=True)
-        moment = datetime.now().astimezone()
-        stamp = moment.strftime("%Y-%m-%dT%H-%M-%S-%f")[:-3]
-        weather = WEATHER_NAMES.get(self.weather_code, str(self.weather_code))
-        path = folder / f"{stamp}_{weather.replace(' ', '_')}_{self.scale_name}.json"
-        record = {
-            "timestamp": moment.isoformat(timespec="seconds"),
-            "weather": weather,
-            "weather_code": self.weather_code,
-            "scale": self.scale_name,
-            "tonic": self.tonic,
-            "bars": self.bars,
-            "bpm": self.synth.bpm,
-            "swing": self.swing,
-            "wind_gust": self.wind_gust,
-            "volume": self.synth.volume,
-            "duty": self.synth.duty,
-            "seed": self.seed,
-            "lead_pool": self._lead_notes,
-            "lead": self.lead_line,
-            "rhythm_line": self.rhythm_line,
-            "bass": self.bass_line,
-            "chords": self.chord_line,
-            "rhythm": [
-                {"notes": list(chord) if chord is not None else None, "sixteenths": length}
-                for chord, length in self._rhythm_hits
-            ],
-        }
-        path.write_text(json.dumps(record, indent=2) + "\n")
+        place = self.weather.get("place")
+        place_name = place if isinstance(place, str) and place else "unknown"
+        condition = self.weather.get("condition")
+        weather_name = (
+            condition
+            if isinstance(condition, str)
+            else WEATHER_NAMES.get(self.weather_code, str(self.weather_code))
+        )
+        path = clip_path(folder, weather_name, place_name)
+        self.synth.save(self.tune, str(path))
         return path
 
     @classmethod
     def play_file(cls, path: Path) -> None:
-        """Play a jingle saved by save()."""
+        """Play an older jingle saved as JSON."""
         record = json.loads(path.read_text())
         jingle = cls(
-            record["weather_code"],
+            {"weather_code": record["weather_code"]},
             tonic=record["tonic"],
             bars=record["bars"],
             bpm=record["bpm"],
